@@ -1,0 +1,48 @@
+<!DOCTYPE html> 
+
+{% extends "base.html" %}
+
+{% load static %}
+
+<html lang="ru"> 
+  <head>    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'img/fav/favicon.ico' %}" type="image">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/fav/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/fav/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/fav/favicon-16x16.png' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% block title %}Лента записей{% endblock %}
+  </head>
+  <body>
+    {% block content %}
+      <div class="container py-5">
+        <h1>Лента записей</h1>                        
+        <!-- Перебираем в цикле все посты -->
+        <hr>
+        {% for i in post %}
+          <article>
+            <ul>
+              <li>
+                Место: {{ i.location }}             
+              </li>
+              <li>
+                Дата: {{ i.date }}
+              </li>
+              <li>
+                Категория: <a href="{{ i.category }}">{{ i.category }}</a>
+              </li>
+            </ul>          
+            <!-- Первые 10 слов -->
+            <p>
+              {{ i.text|truncatewords:10 }}
+            </p>
+            <a href="{% url 'blog:post_detail' i.id %}">Читать полный текст</a>
+          </article>
+          <hr>
+        {% endfor %}           
+      </div>
+    {% endblock %}
+  </body>
+</html>
